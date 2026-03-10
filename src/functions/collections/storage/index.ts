@@ -39,6 +39,7 @@ export const Storage: CollectionConfig = {
     //staticDir: path.resolve(dirname, '../../../../public/media'),
     adminThumbnail: 'thumbnail',
     focalPoint: true,
+    disableLocalStorage: true,
     imageSizes: [
       {
         name: 'thumbnail',
@@ -51,6 +52,33 @@ export const Storage: CollectionConfig = {
         width: 768,
         height: 1024,
         position: 'centre',
+      },
+      {
+        name: 'square',
+        width: 500,
+        height: 500,
+      },
+      {
+        name: 'small',
+        width: 600,
+      },
+      {
+        name: 'medium',
+        width: 900,
+      },
+      {
+        name: 'large',
+        width: 1400,
+      },
+      {
+        name: 'xlarge',
+        width: 1920,
+      },
+      {
+        name: 'og',
+        width: 1200,
+        height: 630,
+        crop: 'center',
       },
     ],
     formatOptions: {

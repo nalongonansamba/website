@@ -85,7 +85,7 @@ export const plugins: Plugin[] = [
       },
     },
   }),
-  /**newsletterPlugin({
+  newsletterPlugin({
     access: {
       isAdmin,
     },
@@ -103,14 +103,18 @@ export const plugins: Plugin[] = [
         },
       },
     },
-  }), **/
+  }),
   s3Storage({
     collections: {
       storage: {
         disableLocalStorage: true, // Recommended for production
-        prefix: 'media', // Optional prefix for uploaded files
-        generateFileURL: ({ filename, prefix }) =>
-          `https://${process.env.R2_BUCKET}.${process.env.R2_ENDPOINT}/${prefix}/${filename}`,
+        prefix: '',
+        generateFileURL: (args: any) => {
+          if (typeof args.filename !== 'string') return null as unknown as string
+          return process.env.NODE_ENV == 'development'
+            ? `${getServerSideURL()}/${args.prefix}/${args.filename}`
+            : `https://bucket.nalongonansamba.com//${args.prefix}/${args.filename}`
+        },
       },
     },
     bucket: process.env.R2_BUCKET || '',
