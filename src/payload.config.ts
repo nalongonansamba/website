@@ -1,12 +1,12 @@
 import { lexicalEditorConfig } from './functions/lexical-editor'
 import { collections, plugins, settings } from './functions'
 import { getServerSideURL } from './functions/config/getURL'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import path from 'path'
-import { resendAdapter } from '@payloadcms/email-resend'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -18,6 +18,29 @@ export default buildConfig({
     user: 'account',
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+    avatar: 'default',
+    components: {
+      graphics: {
+        Logo: '@/components/admin-logo/logo.tsx',
+        Icon: '@/components/admin-logo/icon.tsx',
+      },
+    },
+    meta: {
+      titleSuffix: ' - Nalongo Nansamba',
+      openGraph: {
+        images: [
+          {
+            url: '/favicon.svg',
+            width: 800,
+            height: 600,
+          },
+        ],
+      },
+      icons: {
+        icon: '/favicon.svg',
+        apple: '/favicon.svg',
+      },
     },
   },
   auth: {

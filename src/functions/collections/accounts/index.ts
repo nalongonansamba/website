@@ -1,4 +1,4 @@
-import { anyone, authenticated, isAdmin, isAdminOrSelf, isModerator } from '@/functions/permissions'
+import { anyone, isAdmin, isAdminOrSelf, isModerator } from '@/functions/permissions'
 import type { CollectionConfig } from 'payload'
 
 export const Accounts: CollectionConfig = {

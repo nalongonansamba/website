@@ -35,6 +35,8 @@ import { FolderField as FolderField_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@pa
 import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
 import { RowLabel as RowLabel_7cc6be6d278ccdece6aef66759c47d34 } from '@/functions/settings/headers/components/row-label'
 import { RowLabel as RowLabel_54593e205c1b45614c51e8ef4c376f88 } from '@/functions/settings/footers/components/row-label'
+import { default as default_4d495d6b5fca42fe1d681af3dd5b5796 } from '@/components/admin-logo/icon.tsx'
+import { default as default_919d0d2cb3d713311592affe7dca016c } from '@/components/admin-logo/logo.tsx'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -76,6 +78,8 @@ export const importMap = {
   "@payloadcms/next/client#FolderTypeField": FolderTypeField_2b8867833a34864a02ddf429b0728a40,
   "@/functions/settings/headers/components/row-label#RowLabel": RowLabel_7cc6be6d278ccdece6aef66759c47d34,
   "@/functions/settings/footers/components/row-label#RowLabel": RowLabel_54593e205c1b45614c51e8ef4c376f88,
+  "@/components/admin-logo/icon.tsx#default": default_4d495d6b5fca42fe1d681af3dd5b5796,
+  "@/components/admin-logo/logo.tsx#default": default_919d0d2cb3d713311592affe7dca016c,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

@@ -25,7 +25,6 @@ export const populateAuthors: CollectionAfterReadHook<Content> = async ({
             id: authorDoc.id,
             name: authorDoc.username,
             bio: authorDoc.bio,
-            age: authorDoc.age,
             email: authorDoc.email,
           }))
         }
