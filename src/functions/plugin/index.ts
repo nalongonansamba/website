@@ -113,13 +113,13 @@ export const plugins: Plugin[] = [
           if (typeof args.filename !== 'string') return null as unknown as string
           return process.env.NODE_ENV == 'development'
             ? `${getServerSideURL()}/${args.prefix}/${args.filename}`
-            : `https://bucket.nalongonansamba.com//${args.prefix}/${args.filename}`
+            : `https://bucket.nalongonansamba.com/${args.prefix}/${args.filename}`
         },
       },
     },
     bucket: process.env.R2_BUCKET || '',
     config: {
-      endpoint: `https://${process.env.R2_ENDPOINT}` || '', // Protocol is required here
+      endpoint: process.env.R2_ENDPOINT || 'https://bucket.nalongonansamba.com', // Protocol is required here
       credentials: {
         accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
         secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
@@ -127,5 +127,8 @@ export const plugins: Plugin[] = [
       region: 'auto', // Required for R2
       forcePathStyle: true, // Required for R2
     },
+    disableLocalStorage: true,
+    enabled: true,
+    acl: 'private',
   }),
 ]
