@@ -36,7 +36,7 @@ export const Storage: CollectionConfig = {
     },
   ],
   upload: {
-    staticDir: path.resolve(dirname, '../../../../public/media'),
+    //staticDir: path.resolve(dirname, '../../../../public/media'),
     adminThumbnail: 'thumbnail',
     focalPoint: true,
     imageSizes: [
