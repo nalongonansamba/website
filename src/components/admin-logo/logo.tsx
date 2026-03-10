@@ -5,8 +5,9 @@ export default function Logo() {
     <div className="flex items-center space-x-2">
       <Image
         alt={'Logo'}
-        fill
-        className={'max-w-full shadow-2xl'}
+        width={420}
+        height={220}
+        className={'w-48 h-48 shadow-2xl'}
         src={'/nalongo-nansamba-banner.svg'}
       />
     </div>
