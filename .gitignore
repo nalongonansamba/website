@@ -35,8 +35,11 @@ yarn-error.log*
 # Removed .env and .env.* from here so they are tracked by git
 # We only keep .local files ignored as they usually contain secrets
 .env*.local
+.env
+.env.local
+
 
 # Media Handling
 /media
 # Explicitly allow everything in public/media even if other media rules exist
-!/public/media/
+/public/media/*
