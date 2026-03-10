@@ -85,7 +85,7 @@ export const plugins: Plugin[] = [
       },
     },
   }),
-  newsletterPlugin({
+  /**newsletterPlugin({
     access: {
       isAdmin,
     },
@@ -103,7 +103,7 @@ export const plugins: Plugin[] = [
         },
       },
     },
-  }),
+  }), **/
   s3Storage({
     collections: {
       storage: {
