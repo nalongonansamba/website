@@ -2,13 +2,13 @@
 
 import type { PayloadAdminBarProps, PayloadMeUser } from '@payloadcms/admin-bar'
 import { useSelectedLayoutSegments } from 'next/navigation'
+import { getClientSideURL } from '@/functions/config/getURL'
 import { PayloadAdminBar } from '@payloadcms/admin-bar'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import '@/components/styles/globals.css'
 import { cn } from '../lib/utils'
-import { getClientSideURL } from '@/functions/config/getURL'
 
 const baseClass = 'admin-bar'
 
@@ -39,7 +39,7 @@ export const AdminBar: React.FC<{
     <div
       className={cn(
         baseClass,
-        'py-1 bg-black text-white sticky top-0 left-0 w-full z-9999', // Added sticky and high z-index
+        'py-3 bg-black text-white sticky top-0 left-0 w-full z-60', // Added sticky and high z-index
         {
           block: show,
           hidden: !show,
@@ -51,6 +51,7 @@ export const AdminBar: React.FC<{
           {...adminBarProps}
           cmsURL={getClientSideURL()}
           collectionSlug={collection}
+          authCollectionSlug="account"
           collectionLabels={{
             plural: collectionLabels[collection]?.plural || 'Routes',
             singular: collectionLabels[collection]?.singular || 'Route',

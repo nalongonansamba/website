@@ -13,6 +13,7 @@ import { Providers } from '@/theme-provider'
 import { Footer } from '@/functions/settings/footers/components/footers'
 import { getServerSideURL } from '@/functions/config/getURL'
 import { mergeOpenGraph } from '@/functions/config/mergeOpenGraph'
+import { AuthProvider } from '@/components/auth-provider'
 
 export default async function RootLayout(props: { children: ReactNode }) {
   const { isEnabled } = await draftMode()
@@ -25,21 +26,19 @@ export default async function RootLayout(props: { children: ReactNode }) {
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body className="relative flex flex-col h-svh">
+      <body className="relative flex flex-col min-h-svh">
         <Providers>
-          <TooltipProvider>
-            <AdminBar
-              adminBarProps={{
-                preview: isEnabled,
-              }}
-            />
-            <Headers />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <BackgroundCover />
-            <BackgroundCover placement="bottom" />
-            <Toaster richColors />
-          </TooltipProvider>
+          <AuthProvider>
+            <TooltipProvider>
+              <AdminBar adminBarProps={{ preview: isEnabled }} />
+              <Headers /> {/* sticky/fixed header sits here */}
+              <main className="flex-1 flex flex-col">{children}</main>
+              <Footer />
+              <BackgroundCover />
+              <BackgroundCover placement="bottom" />
+              <Toaster richColors />
+            </TooltipProvider>
+          </AuthProvider>
         </Providers>
       </body>
     </html>

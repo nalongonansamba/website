@@ -1,5 +1,6 @@
 'use client'
 
+import { useAuth } from '@/components/auth-provider'
 import { cn } from '@/components/lib/utils'
 import { LinkManager } from '@/components/link-manager'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -28,6 +29,7 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
   const [theme, setTheme] = useState<string | null>(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
+  const { user } = useAuth()
 
   useEffect(() => {
     setHeaderTheme(null)
@@ -41,9 +43,13 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
 
   return (
     <header
-      className={cn('fixed top-0 inset-x-0 z-55 flex items-center', {
-        ...(theme ? { 'data-theme': theme } : {}),
-      })}
+      className={cn(
+        'sticky inset-x-0 z-55 flex items-center',
+        {
+          ...(theme ? { 'data-theme': theme } : {}),
+        },
+        user ? 'top-11' : 'top-0',
+      )}
     >
       <div className="container flex items-center justify-between py-5">
         <div className="flex items-center">
@@ -69,7 +75,12 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
           </nav>
 
           <nav className="flex items-center gap-2">
-            <Button size="lg" variant="secondary">
+            <Button
+              size="lg"
+              variant="secondary"
+              nativeButton={false}
+              render={<Link href="/contact-us" />}
+            >
               Join us today
             </Button>
             <Button size="icon-lg" variant="secondary">
