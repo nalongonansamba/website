@@ -12,7 +12,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  serverURL: getServerSideURL(),
+  serverURL: getServerSideURL() || 'https://nalongonansamba.com',
   admin: {
     user: 'account',
     importMap: {
@@ -31,8 +31,8 @@ export default buildConfig({
   }),
   sharp,
   plugins: plugins,
-  cors: [getServerSideURL()].filter(Boolean),
-  csrf: [getServerSideURL()].filter(Boolean),
+  cors: [getServerSideURL(), 'https://nalongonansamba.com'].filter(Boolean),
+  csrf: [getServerSideURL(), 'https://nalongonansamba.com'].filter(Boolean),
   email: resendAdapter({
     defaultFromAddress: process.env.WEBSITE_EMAIL || '',
     defaultFromName: process.env.RESEND_DEFALUT_NAME || '',
