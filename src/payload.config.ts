@@ -61,8 +61,16 @@ export default buildConfig({
   }),
   sharp,
   plugins: plugins,
-  cors: [getServerSideURL(), 'https://nalongonansamba.com'].filter(Boolean),
-  csrf: [getServerSideURL(), 'https://nalongonansamba.com'].filter(Boolean),
+  cors: [
+    getServerSideURL(),
+    'https://nalongonansamba.com',
+    'https://bucket.nalongonansamba.com',
+  ].filter(Boolean),
+  csrf: [
+    getServerSideURL(),
+    'https://nalongonansamba.com',
+    'https://bucket.nalongonansamba.com',
+  ].filter(Boolean),
   email: resendAdapter({
     defaultFromAddress: process.env.WEBSITE_EMAIL || '',
     defaultFromName: process.env.RESEND_DEFALUT_NAME || '',

@@ -10,16 +10,19 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
 const nextConfig = {
   images: {
     remotePatterns: [
-      ...[NEXT_PUBLIC_SERVER_URL, 'http://127.0.0.1:3001', 'https://raw.githubusercontent.com'].map(
-        (item) => {
-          const url = new URL(item)
+      ...[
+        NEXT_PUBLIC_SERVER_URL,
+        'http://127.0.0.1:3001',
+        'https://bucket.nalongonansamba.com',
+        'https://raw.githubusercontent.com',
+      ].map((item) => {
+        const url = new URL(item)
 
-          return {
-            hostname: url.hostname,
-            protocol: url.protocol.replace(':', ''),
-          }
-        },
-      ),
+        return {
+          hostname: url.hostname,
+          protocol: url.protocol.replace(':', ''),
+        }
+      }),
     ],
     dangerouslyAllowSVG: true,
   },
