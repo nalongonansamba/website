@@ -28,7 +28,11 @@ export default buildConfig({
     },
     meta: {
       titleSuffix: ' - Nalongo Nansamba',
+      title: 'Admin dashboard - Nalongo Nansamba',
+      description: 'Admininstrative panel for Nalongo Nansamba',
       openGraph: {
+        title: 'Admin dashboard - Nalongo Nansamba',
+        description: 'Admininstrative panel for Nalongo Nansamba',
         images: [
           {
             url: '/favicon.svg',
