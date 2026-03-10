@@ -13,11 +13,15 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   serverURL: getServerSideURL() || 'https://nalongonansamba.com',
+  cookiePrefix: 'nalongo',
   admin: {
     user: 'account',
     importMap: {
       baseDir: path.resolve(dirname),
     },
+  },
+  auth: {
+    jwtOrder: ['cookie', 'Bearer', 'JWT'],
   },
   collections: collections,
   globals: settings,
@@ -28,6 +32,9 @@ export default buildConfig({
   },
   db: mongooseAdapter({
     url: process.env.DATABASE_URL || '',
+    connectOptions: {
+      dbName: 'test',
+    },
   }),
   sharp,
   plugins: plugins,

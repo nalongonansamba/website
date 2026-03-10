@@ -1,17 +1,14 @@
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import type { CollectionConfig } from 'payload'
-import { fileURLToPath } from 'url'
-import path from 'path'
 import { anyone, isModerator } from '@/functions/permissions'
-
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+import type { CollectionConfig } from 'payload'
 
 export const Storage: CollectionConfig = {
   slug: 'storage',
   admin: {
     group: 'Management',
   },
+  folders: true,
+  trash: true,
   access: {
     admin: isModerator,
     read: anyone,
@@ -34,9 +31,17 @@ export const Storage: CollectionConfig = {
         },
       }),
     },
+    {
+      name: 'prefix',
+      type: 'text',
+      defaultValue: '',
+      admin: {
+        description: 'Prefix is basically path name to which to structure the files',
+        position: 'sidebar',
+      },
+    },
   ],
   upload: {
-    //staticDir: path.resolve(dirname, '../../../../public/media'),
     adminThumbnail: 'thumbnail',
     focalPoint: true,
     disableLocalStorage: true,
@@ -81,11 +86,5 @@ export const Storage: CollectionConfig = {
         crop: 'center',
       },
     ],
-    formatOptions: {
-      format: 'webp',
-      options: {
-        quality: 80,
-      },
-    },
   },
 }

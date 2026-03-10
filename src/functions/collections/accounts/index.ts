@@ -1,4 +1,4 @@
-import { anyone, authenticated, isAdmin, isModerator } from '@/functions/permissions'
+import { anyone, authenticated, isAdmin, isAdminOrSelf, isModerator } from '@/functions/permissions'
 import type { CollectionConfig } from 'payload'
 
 export const Accounts: CollectionConfig = {
@@ -10,19 +10,18 @@ export const Accounts: CollectionConfig = {
   access: {
     admin: isAdmin,
     read: anyone,
-    update: authenticated,
-    delete: authenticated,
+    update: isAdminOrSelf,
+    delete: isModerator,
     unlock: isModerator,
-    readVersions: authenticated,
+    readVersions: isModerator,
   },
   auth: {
     loginWithUsername: {
       requireUsername: true,
-      requireEmail: true,
       allowEmailLogin: true,
     },
     useSessions: true,
-    tokenExpiration: 7200, // 2 hours
+    tokenExpiration: 604800, // 1 week
   },
   fields: [
     {
@@ -36,13 +35,6 @@ export const Accounts: CollectionConfig = {
       defaultValue: 'user',
       required: true,
       options: ['admin', 'user', 'editor', 'moderator', 'developer'],
-    },
-    {
-      name: 'age',
-      type: 'number',
-      admin: {
-        position: 'sidebar',
-      },
     },
     {
       name: 'avatar',

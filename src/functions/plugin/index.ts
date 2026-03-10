@@ -9,7 +9,7 @@ import { getServerSideURL } from '../config/getURL'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { Content, Route } from '@/payload-types'
-import { isAdmin } from '../permissions'
+import { anyone, isAdmin, isModerator } from '../permissions'
 import type { Plugin } from 'payload'
 
 const generateTitle: GenerateTitle<Route | Content> = ({ doc }) => {
@@ -63,10 +63,26 @@ export const plugins: Plugin[] = [
       admin: {
         group: 'Configurations',
       },
+      access: {
+        admin: isModerator,
+        read: anyone,
+        update: isModerator,
+        delete: isModerator,
+        unlock: isModerator,
+        readVersions: isModerator,
+      },
     },
     formOverrides: {
       admin: {
         group: 'Configurations',
+      },
+      access: {
+        admin: isModerator,
+        read: anyone,
+        update: isModerator,
+        delete: isModerator,
+        unlock: isModerator,
+        readVersions: isModerator,
       },
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
@@ -107,28 +123,27 @@ export const plugins: Plugin[] = [
   s3Storage({
     collections: {
       storage: {
-        disableLocalStorage: true, // Recommended for production
+        disableLocalStorage: true,
         prefix: '',
         generateFileURL: (args: any) => {
           if (typeof args.filename !== 'string') return null as unknown as string
-          return process.env.NODE_ENV == 'development'
-            ? `${getServerSideURL()}/${args.prefix}/${args.filename}`
-            : `https://bucket.nalongonansamba.com/${args.prefix}/${args.filename}`
+          const prefix = args.prefix ? `${args.prefix}/` : ''
+          return `https://bucket.nalongonansamba.com/${prefix}${args.filename}`
         },
       },
     },
     bucket: process.env.R2_BUCKET || '',
     config: {
-      endpoint: process.env.R2_ENDPOINT || 'https://bucket.nalongonansamba.com', // Protocol is required here
+      endpoint: process.env.R2_ENDPOINT || '',
       credentials: {
         accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
         secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
       },
-      region: 'auto', // Required for R2
-      forcePathStyle: true, // Required for R2
+      region: 'auto',
+      forcePathStyle: true,
     },
     disableLocalStorage: true,
     enabled: true,
-    acl: 'private',
+    //acl: 'private', // ⚠️ see note below
   }),
 ]

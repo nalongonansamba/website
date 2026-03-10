@@ -75,14 +75,18 @@ export interface Config {
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
-    subscribers: Subscriber;
     'payload-kv': PayloadKv;
     'payload-jobs': PayloadJob;
+    'payload-folders': FolderInterface;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    'payload-folders': {
+      documentsAndFolders: 'payload-folders' | 'storage';
+    };
+  };
   collectionsSelect: {
     route: RouteSelect<false> | RouteSelect<true>;
     content: ContentSelect<false> | ContentSelect<true>;
@@ -92,9 +96,9 @@ export interface Config {
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
-    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
+    'payload-folders': PayloadFoldersSelect<false> | PayloadFoldersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -106,12 +110,10 @@ export interface Config {
   globals: {
     headers: Header;
     footer: Footer;
-    'newsletter-settings': NewsletterSetting;
   };
   globalsSelect: {
     headers: HeadersSelect<false> | HeadersSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
-    'newsletter-settings': NewsletterSettingsSelect<false> | NewsletterSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -149,7 +151,7 @@ export interface AccountAuthOperations {
   registerFirstUser: {
     password: string;
     username: string;
-    email: string;
+    email?: string;
   };
   unlock:
     | {
@@ -335,9 +337,14 @@ export interface Storage {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Prefix is basically path name to which to structure the files
+   */
   prefix?: string | null;
+  folder?: (string | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -416,6 +423,32 @@ export interface Storage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-folders".
+ */
+export interface FolderInterface {
+  id: string;
+  name: string;
+  folder?: (string | null) | FolderInterface;
+  documentsAndFolders?: {
+    docs?: (
+      | {
+          relationTo?: 'payload-folders';
+          value: string | FolderInterface;
+        }
+      | {
+          relationTo?: 'storage';
+          value: string | Storage;
+        }
+    )[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  folderType?: 'storage'[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
  */
 export interface Category {
@@ -446,11 +479,10 @@ export interface Account {
   id: string;
   bio?: string | null;
   role: 'admin' | 'user' | 'editor' | 'moderator' | 'developer';
-  age?: number | null;
   avatar?: (string | null) | Storage;
   updatedAt: string;
   createdAt: string;
-  email: string;
+  email?: string | null;
   username: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
@@ -1218,79 +1250,6 @@ export interface FormSubmission {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subscribers".
- */
-export interface Subscriber {
-  id: string;
-  /**
-   * Subscriber email address
-   */
-  email: string;
-  /**
-   * Subscriber full name
-   */
-  name?: string | null;
-  /**
-   * Preferred language for communications
-   */
-  locale?: 'en' | null;
-  magicLinkToken?: string | null;
-  magicLinkTokenExpiry?: string | null;
-  /**
-   * ID from email service provider
-   */
-  externalId?: string | null;
-  /**
-   * Current subscription status
-   */
-  subscriptionStatus: 'active' | 'unsubscribed' | 'pending';
-  /**
-   * When the user subscribed
-   */
-  subscribedAt?: string | null;
-  /**
-   * When the user unsubscribed
-   */
-  unsubscribedAt?: string | null;
-  /**
-   * Reason for unsubscribing
-   */
-  unsubscribeReason?: string | null;
-  /**
-   * Email communication preferences
-   */
-  emailPreferences?: {
-    /**
-     * Receive regular newsletter updates
-     */
-    newsletter?: boolean | null;
-    /**
-     * Receive important announcements
-     */
-    announcements?: boolean | null;
-  };
-  /**
-   * Where the subscriber signed up from
-   */
-  source?: string | null;
-  /**
-   * Indicates this subscriber was imported from an external provider via webhook
-   */
-  importedFromProvider?: boolean | null;
-  /**
-   * Technical information about signup
-   */
-  signupMetadata?: {
-    ipAddress?: string | null;
-    userAgent?: string | null;
-    referrer?: string | null;
-    signupPage?: string | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -1438,8 +1397,8 @@ export interface PayloadLockedDocument {
         value: string | FormSubmission;
       } | null)
     | ({
-        relationTo: 'subscribers';
-        value: string | Subscriber;
+        relationTo: 'payload-folders';
+        value: string | FolderInterface;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1923,7 +1882,6 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface AccountSelect<T extends boolean = true> {
   bio?: T;
   role?: T;
-  age?: T;
   avatar?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1951,8 +1909,10 @@ export interface StorageSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
   prefix?: T;
+  folder?: T;
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   url?: T;
   thumbnailURL?: T;
   filename?: T;
@@ -2214,40 +2174,6 @@ export interface FormSubmissionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subscribers_select".
- */
-export interface SubscribersSelect<T extends boolean = true> {
-  email?: T;
-  name?: T;
-  locale?: T;
-  magicLinkToken?: T;
-  magicLinkTokenExpiry?: T;
-  externalId?: T;
-  subscriptionStatus?: T;
-  subscribedAt?: T;
-  unsubscribedAt?: T;
-  unsubscribeReason?: T;
-  emailPreferences?:
-    | T
-    | {
-        newsletter?: T;
-        announcements?: T;
-      };
-  source?: T;
-  importedFromProvider?: T;
-  signupMetadata?:
-    | T
-    | {
-        ipAddress?: T;
-        userAgent?: T;
-        referrer?: T;
-        signupPage?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -2282,6 +2208,18 @@ export interface PayloadJobsSelect<T extends boolean = true> {
   queue?: T;
   waitUntil?: T;
   processing?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-folders_select".
+ */
+export interface PayloadFoldersSelect<T extends boolean = true> {
+  name?: T;
+  folder?: T;
+  documentsAndFolders?: T;
+  folderType?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2439,112 +2377,6 @@ export interface Footer {
   createdAt?: string | null;
 }
 /**
- * Configure email provider settings and templates
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "newsletter-settings".
- */
-export interface NewsletterSetting {
-  id: string;
-  /**
-   * Choose which email service to use
-   */
-  provider: 'resend' | 'broadcast';
-  resendSettings?: {
-    /**
-     * Your Resend API key
-     */
-    apiKey: string;
-    audienceIds?:
-      | {
-          locale: 'en';
-          production?: string | null;
-          development?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  broadcastSettings?: {
-    /**
-     * Your Broadcast instance URL
-     */
-    apiUrl: string;
-    /**
-     * Your Broadcast API token
-     */
-    token: string;
-    /**
-     * Copy this URL to your Broadcast webhook settings
-     */
-    webhookUrl?: string | null;
-    /**
-     * Paste the webhook secret from Broadcast here
-     */
-    webhookSecret?: string | null;
-    webhookStatus?: ('not_configured' | 'configured' | 'verified' | 'error') | null;
-    lastWebhookReceived?: string | null;
-  };
-  /**
-   * Default sender email address
-   */
-  fromAddress: string;
-  /**
-   * Default sender name
-   */
-  fromName: string;
-  /**
-   * Optional reply-to email address
-   */
-  replyTo?: string | null;
-  brandSettings: {
-    /**
-     * Your website or newsletter name
-     */
-    siteName: string;
-    /**
-     * Your website URL (optional)
-     */
-    siteUrl?: string | null;
-    /**
-     * URL to your logo image (optional)
-     */
-    logoUrl?: string | null;
-  };
-  emailTemplates?: {
-    welcome?: {
-      enabled?: boolean | null;
-      subject?: string | null;
-      preheader?: string | null;
-    };
-    magicLink?: {
-      subject?: string | null;
-      preheader?: string | null;
-      expirationTime?: ('1h' | '24h' | '7d' | '30d') | null;
-    };
-  };
-  subscriptionSettings?: {
-    /**
-     * Require email confirmation before activating subscriptions
-     */
-    requireDoubleOptIn?: boolean | null;
-    /**
-     * Leave empty to allow all domains
-     */
-    allowedDomains?:
-      | {
-          domain: string;
-          id?: string | null;
-        }[]
-      | null;
-    /**
-     * Maximum number of subscriptions allowed from a single IP address
-     */
-    maxSubscribersPerIP?: number | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "headers_select".
  */
@@ -2618,79 +2450,6 @@ export interface FooterSelect<T extends boolean = true> {
       };
   title?: T;
   copyright?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "newsletter-settings_select".
- */
-export interface NewsletterSettingsSelect<T extends boolean = true> {
-  provider?: T;
-  resendSettings?:
-    | T
-    | {
-        apiKey?: T;
-        audienceIds?:
-          | T
-          | {
-              locale?: T;
-              production?: T;
-              development?: T;
-              id?: T;
-            };
-      };
-  broadcastSettings?:
-    | T
-    | {
-        apiUrl?: T;
-        token?: T;
-        webhookUrl?: T;
-        webhookSecret?: T;
-        webhookStatus?: T;
-        lastWebhookReceived?: T;
-      };
-  fromAddress?: T;
-  fromName?: T;
-  replyTo?: T;
-  brandSettings?:
-    | T
-    | {
-        siteName?: T;
-        siteUrl?: T;
-        logoUrl?: T;
-      };
-  emailTemplates?:
-    | T
-    | {
-        welcome?:
-          | T
-          | {
-              enabled?: T;
-              subject?: T;
-              preheader?: T;
-            };
-        magicLink?:
-          | T
-          | {
-              subject?: T;
-              preheader?: T;
-              expirationTime?: T;
-            };
-      };
-  subscriptionSettings?:
-    | T
-    | {
-        requireDoubleOptIn?: T;
-        allowedDomains?:
-          | T
-          | {
-              domain?: T;
-              id?: T;
-            };
-        maxSubscribersPerIP?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
