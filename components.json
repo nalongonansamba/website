@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "base-mira",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/components/styles/globals.css",
+    "baseColor": "stone",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "hugeicons",
+  "menuColor": "default",
+  "menuAccent": "subtle",
+  "rtl": false,
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/components/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/components/lib",
+    "hooks": "@/components/hooks"
+  },
+  "registries": {
+    "@formcn": "https://formcn.dev/r/{name}.json"
+  }
+}
