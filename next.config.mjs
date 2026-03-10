@@ -31,12 +31,9 @@ const nextConfig = {
     }
     return webpackConfig
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   reactStrictMode: true,
-  turbopack: true,
   redirects,
+  serverExternalPackages: ['jsdom'],
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
