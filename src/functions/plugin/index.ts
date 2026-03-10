@@ -106,7 +106,7 @@ export const plugins: Plugin[] = [
   }),
   s3Storage({
     collections: {
-      media: {
+      storage: {
         disableLocalStorage: true, // Recommended for production
         prefix: 'media', // Optional prefix for uploaded files
         generateFileURL: ({ filename, prefix }) =>

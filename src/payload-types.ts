@@ -335,6 +335,7 @@ export interface Storage {
     };
     [k: string]: unknown;
   } | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1901,6 +1902,7 @@ export interface AccountSelect<T extends boolean = true> {
 export interface StorageSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
