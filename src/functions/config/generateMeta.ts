@@ -9,7 +9,7 @@ const getImageURL = (image?: Storage | Config['db']['defaultIDType'] | null) => 
   const serverUrl = getServerSideURL()
   let url = serverUrl + '/website-template-OG.webp'
   if (image && typeof image === 'object' && 'url' in image) {
-    const ogUrl = image.sizes?.og?.url
+    const ogUrl = image.sizes?.thumbnail?.url
     url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url
   }
   return url

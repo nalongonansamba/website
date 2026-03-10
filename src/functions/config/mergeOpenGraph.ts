@@ -6,7 +6,7 @@ const defaultOpenGraph: Metadata['openGraph'] = {
   description: 'Nalongo Nansamba - President of the Association of Traditional Healers of Uganda',
   images: [
     {
-      url: `${getServerSideURL()}/website-template-OG.webp`,
+      url: `${getServerSideURL()}/nalongo-nansamba-banner.svg`,
     },
   ],
   siteName: 'Nalongo Nansamba',
