@@ -3,17 +3,17 @@ import { cn } from '../lib/utils'
 import { FC } from 'react'
 
 export type Props = {
-  posts: CardPostData[]
+  content: CardPostData[]
 }
 
 export const CollectionArchive: FC<Props> = (props) => {
-  const { posts } = props
+  const { content } = props
 
   return (
     <div className={cn('container')}>
       <div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-          {posts?.map((result, index) => {
+          {content?.map((result, index) => {
             if (typeof result === 'object' && result !== null) {
               return (
                 <div className="col-span-1" key={index}>

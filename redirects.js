@@ -9,7 +9,7 @@ const redirects = async () => {
       },
     ],
     permanent: false,
-    source: '/:path((?!ie-incompatible.html$).*)', // all pages except the incompatibility page
+    source: '/:path((?!ie-incompatible.html$).*)', // all route except the incompatibility page
   }
 
   const redirects = [internetExplorerRedirect]

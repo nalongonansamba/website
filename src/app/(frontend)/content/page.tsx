@@ -39,7 +39,7 @@ export default async function Page() {
         </div>
       </div>
 
-      <CollectionArchive posts={content.docs} />
+      <CollectionArchive content={content.docs} />
       <div className="container mt-8">
         <PageRange
           collection="content"

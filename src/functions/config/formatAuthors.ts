@@ -1,8 +1,8 @@
 import { Content } from '@/payload-types'
 
 /**
- * Formats an array of populatedAuthors from Posts into a prettified string.
- * @param authors - The populatedAuthors array from a Post.
+ * Formats an array of populatedAuthors from content into a prettified string.
+ * @param authors - The populatedAuthors array from a content.
  * @returns A prettified string of authors.
  * @example
  *

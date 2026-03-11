@@ -3,7 +3,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { unstable_cache } from 'next/cache'
 
-const getPagesSitemap = unstable_cache(
+const getRouteSitemap = unstable_cache(
   async () => {
     const payload = await getPayload({ config })
     const SITE_URL =
@@ -57,12 +57,12 @@ const getPagesSitemap = unstable_cache(
   },
   ['route-sitemap'],
   {
-    tags: ['pages-sitemap'],
+    tags: ['route-sitemap'],
   },
 )
 
 export async function GET() {
-  const sitemap = await getPagesSitemap()
+  const sitemap = await getRouteSitemap()
 
   return getServerSideSitemap(sitemap)
 }
