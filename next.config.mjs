@@ -15,6 +15,7 @@ const nextConfig = {
         'http://127.0.0.1:3001',
         'https://bucket.nalongonansamba.com',
         'https://raw.githubusercontent.com',
+        'https://cdn.simpleicons.org',
       ].map((item) => {
         const url = new URL(item)
 

@@ -3,13 +3,8 @@ import { getCachedGlobal } from '@/functions/config/getGlobals'
 import { LinkManager } from '@/components/link-manager'
 import type { Footer } from '@/payload-types'
 import Link from 'next/link'
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from '@/components/ui/input-group'
 import { SubscriptionForm } from './subscription-form'
+import { SocialMedia } from './social-media'
 
 export async function Footer() {
   // @ts-ignore
@@ -56,6 +51,7 @@ export async function Footer() {
           </div>
         </div>
 
+        <SocialMedia links={footerData?.socialMediaHandles} />
         <div className="flex flex-col gap-5 md:max-w-sm">
           <div className="flex flex-col">
             <h2 className="uppercase text-2xl font-semibold">Stay connected</h2>

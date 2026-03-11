@@ -2373,6 +2373,16 @@ export interface Footer {
    * The copyright text on the footer
    */
   copyright: string;
+  socialMediaHandles?:
+    | {
+        /**
+         * Auto-extracted from the URL
+         */
+        name?: string | null;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2450,6 +2460,13 @@ export interface FooterSelect<T extends boolean = true> {
       };
   title?: T;
   copyright?: T;
+  socialMediaHandles?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
