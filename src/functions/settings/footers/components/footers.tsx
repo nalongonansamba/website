@@ -1,10 +1,12 @@
 import { ThemeSelector } from '@/theme-provider/theme/theme-selector'
 import { getCachedGlobal } from '@/functions/config/getGlobals'
 import { LinkManager } from '@/components/link-manager'
-import type { Footer } from '@/payload-types'
-import Link from 'next/link'
 import { SubscriptionForm } from './subscription-form'
 import { SocialMedia } from './social-media'
+import { cn } from '@/components/lib/utils'
+import type { Footer } from '@/payload-types'
+import Link from 'next/link'
+import Image from 'next/image'
 
 export async function Footer() {
   // @ts-ignore
@@ -12,10 +14,17 @@ export async function Footer() {
   const navItems = footerData?.navItems || []
 
   return (
-    <footer className="mt-auto bg-black dark:bg-card text-white">
+    <footer className={cn('mt-auto backdrop-blur bg-card/15 text-card-foreground')}>
       <section className="container flex flex-col gap-10 md:gap-20 py-20 md:py-32">
         <div className="grid grid-cols-12">
           <nav className="col-span-12 md:col-span-3 flex flex-col">
+            <Image
+              src="/favicon.svg"
+              alt="Footer Logo"
+              width={16}
+              height={16}
+              className="size-16 rounded-full"
+            />
             <Link className="text-3xl font-bold " href="/">
               {footerData?.title}
             </Link>

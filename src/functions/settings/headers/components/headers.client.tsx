@@ -7,6 +7,7 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import { Select, SelectContent, SelectTrigger } from '@/components/ui/select'
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -15,9 +16,9 @@ import {
 } from '@/components/ui/sheet'
 import { Header } from '@/payload-types'
 import { useHeaderTheme } from '@/theme-provider/header-theme'
-import { ThemeSelector } from '@/theme-provider/theme/theme-selector'
 import { Menu11Icon, Search } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { FC, useEffect, useState } from 'react'
@@ -28,6 +29,7 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
   const navItems = props?.navItems || []
   const [theme, setTheme] = useState<string | null>(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
+  const [open, setClose] = useState<boolean>(false)
   const pathname = usePathname()
   const { user } = useAuth()
 
@@ -44,7 +46,7 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
   return (
     <header
       className={cn(
-        'sticky inset-x-0 z-55 flex items-center',
+        'sticky isolate inset-x-0 z-55 flex items-center transition-colors duration-300',
         {
           ...(theme ? { 'data-theme': theme } : {}),
         },
@@ -52,7 +54,14 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
       )}
     >
       <div className="container flex items-center justify-between py-5">
-        <div className="flex items-center">
+        <div className="flex items-center gap-1 mix-blend-difference text-white dark:text-current">
+          <Image
+            src="/favicon.svg"
+            alt="Footer Logo"
+            width={10}
+            height={10}
+            className="size-10 rounded-full"
+          />
           <Link href="/" className="text-2xl font-extrabold cursor-pointer">
             {props?.title}
           </Link>
@@ -64,10 +73,7 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
                 <LinkManager
                   key={i}
                   {...link}
-                  className={cn(
-                    'p-0 text-base text-current/55 hover:text-current',
-                    'hover:decoration-wavy cursor-pointer',
-                  )}
+                  className={cn('p-0 text-base', 'hover:decoration-wavy cursor-pointer')}
                   appearance="link"
                 />
               )
@@ -79,6 +85,7 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
               size="lg"
               variant="secondary"
               nativeButton={false}
+              className="hidden md:flex"
               render={<Link href="/contact-us" />}
             >
               Join us today
@@ -86,7 +93,7 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
             <Button size="icon-lg" variant="secondary">
               <HugeiconsIcon icon={Search} className="dualTone" />
             </Button>
-            <Sheet>
+            <Sheet open={open} onOpenChange={setClose}>
               <SheetTrigger
                 className={cn(
                   buttonVariants({
@@ -111,6 +118,7 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
                         <LinkManager
                           key={i}
                           {...link}
+                          onClick={() => setClose(!open)}
                           className={cn(
                             'p-0 w-fit text-xl text-current/55 hover:text-current',
                             'hover:decoration-wavy cursor-pointer border',
@@ -121,9 +129,21 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
                     })}
                   </div>
 
-                  <span className="text-muted-foreground p-5">
-                    Copyright © 2026 Nalongo Nasamba
-                  </span>
+                  <div className="flex flex-col gap-5 p-5">
+                    <Button size="icon-lg" variant="secondary">
+                      <HugeiconsIcon icon={Search} className="dualTone" />
+                    </Button>
+                    <Button
+                      size="lg"
+                      variant="secondary"
+                      nativeButton={false}
+                      className="w-fit"
+                      render={<Link href="/contact-us" />}
+                    >
+                      Join us today
+                    </Button>
+                    <span className="text-muted-foreground">Copyright © 2026 Nalongo Nasamba</span>
+                  </div>
                 </section>
               </SheetContent>
             </Sheet>

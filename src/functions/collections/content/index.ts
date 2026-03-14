@@ -120,6 +120,12 @@ export const Contents: CollectionConfig = {
             MetaImageField({
               relationTo: 'storage',
             }),
+            {
+              name: 'keywords',
+              type: 'relationship',
+              relationTo: 'keywords',
+              hasMany: true,
+            },
             MetaDescriptionField({}),
             PreviewField({
               hasGenerateFn: true,

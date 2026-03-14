@@ -38,6 +38,7 @@ export type defaultLinksProps = {
   url?: string | null
   id?: string | null
   megaLinks?: MegaLinkItem[] | null
+  onClick?: () => void
 }
 
 export const LinkManager: FC<defaultLinksProps> = (props) => {
@@ -54,6 +55,7 @@ export const LinkManager: FC<defaultLinksProps> = (props) => {
     reference,
     size: sizeFromProps,
     url,
+    onClick,
   } = props
 
   const href =
@@ -90,6 +92,7 @@ export const LinkManager: FC<defaultLinksProps> = (props) => {
       className={cn('cursor-pointer', className)}
       nativeButton={false}
       // @ts-ignore
+      onClick={onClick}
       render={<Link href={href!! || url!! || '#'} {...newTabProps} />}
     >
       {label}

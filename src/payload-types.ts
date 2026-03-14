@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     route: Route;
     content: Content;
+    keywords: Keyword;
     categories: Category;
     account: Account;
     storage: Storage;
@@ -90,6 +91,7 @@ export interface Config {
   collectionsSelect: {
     route: RouteSelect<false> | RouteSelect<true>;
     content: ContentSelect<false> | ContentSelect<true>;
+    keywords: KeywordsSelect<false> | KeywordsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     account: AccountSelect<false> | AccountSelect<true>;
     storage: StorageSelect<false> | StorageSelect<true>;
@@ -253,6 +255,7 @@ export interface Route {
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (string | null) | Storage;
+    keywords?: (string | Keyword)[] | null;
     description?: string | null;
   };
   publishedAt?: string | null;
@@ -296,6 +299,7 @@ export interface Content {
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (string | null) | Storage;
+    keywords?: (string | Keyword)[] | null;
     description?: string | null;
   };
   publishedAt?: string | null;
@@ -468,6 +472,21 @@ export interface Category {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "keywords".
+ */
+export interface Keyword {
+  id: string;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -1373,6 +1392,10 @@ export interface PayloadLockedDocument {
         value: string | Content;
       } | null)
     | ({
+        relationTo: 'keywords';
+        value: string | Keyword;
+      } | null)
+    | ({
         relationTo: 'categories';
         value: string | Category;
       } | null)
@@ -1505,6 +1528,7 @@ export interface RouteSelect<T extends boolean = true> {
     | {
         title?: T;
         image?: T;
+        keywords?: T;
         description?: T;
       };
   publishedAt?: T;
@@ -1839,6 +1863,7 @@ export interface ContentSelect<T extends boolean = true> {
     | {
         title?: T;
         image?: T;
+        keywords?: T;
         description?: T;
       };
   publishedAt?: T;
@@ -1854,6 +1879,17 @@ export interface ContentSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "keywords_select".
+ */
+export interface KeywordsSelect<T extends boolean = true> {
+  title?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
