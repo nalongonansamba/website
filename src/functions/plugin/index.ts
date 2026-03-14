@@ -13,7 +13,7 @@ import { anyone, isModerator } from '../permissions'
 import type { Plugin } from 'payload'
 
 const generateTitle: GenerateTitle<Route | Content> = ({ doc }) => {
-  return doc?.title ? `${doc.title} - Nalongo Nasamba` : 'Nalongo Nasamba'
+  return doc?.title ? `${doc.title} - Nalongo Nansamba` : 'Nalongo Nansamba'
 }
 
 const generateURL: GenerateURL<Route | Content> = ({ doc }) => {
