@@ -16,7 +16,7 @@ const getImageURL = (image?: Storage | Config['db']['defaultIDType'] | null) => 
 
 export const generateMeta = async (args: {
   doc: Partial<Route> | Partial<Content> | null
-  type: 'website' | 'article' | 'blog' | 'news' | 'video' | 'audio' | 'image' | 'other'
+  type?: 'website' | 'article' | 'blog' | 'news' | 'video' | 'audio' | 'image' | 'other'
 }): Promise<Metadata> => {
   const { doc } = args
   const ogImage = getImageURL(doc?.meta?.image)

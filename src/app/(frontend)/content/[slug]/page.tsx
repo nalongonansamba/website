@@ -74,7 +74,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const { slug = '' } = await paramsPromise
   const decodedSlug = decodeURIComponent(slug)
   const post = await queryPostBySlug({ slug: decodedSlug })
-  return generateMeta({ doc: post })
+  return generateMeta({ doc: post, type: 'article' })
 }
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
