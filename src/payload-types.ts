@@ -487,6 +487,15 @@ export interface Keyword {
    */
   generateSlug?: boolean | null;
   slug: string;
+  parent?: (string | null) | Keyword;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | Keyword;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1888,6 +1897,15 @@ export interface KeywordsSelect<T extends boolean = true> {
   title?: T;
   generateSlug?: T;
   slug?: T;
+  parent?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
