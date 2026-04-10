@@ -3,7 +3,6 @@ import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { revalidateRedirects } from '../hooks/revalidateRedirects'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
-// import { newsletterPlugin } from 'payload-plugin-newsletter'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { getServerSideURL } from '../config/getURL'
 import { seoPlugin } from '@payloadcms/plugin-seo'
@@ -22,6 +21,7 @@ const generateURL: GenerateURL<Route | Content> = ({ doc }) => {
 }
 
 export const plugins: Plugin[] = [
+  // @ts-ignore
   redirectsPlugin({
     collections: ['route', 'content'],
     overrides: {
@@ -43,7 +43,10 @@ export const plugins: Plugin[] = [
         })
       },
       hooks: {
-        afterChange: [revalidateRedirects],
+        afterChange: [
+          // @ts-ignore
+          revalidateRedirects,
+        ],
       },
     },
   }),
@@ -101,25 +104,6 @@ export const plugins: Plugin[] = [
       },
     },
   }),
-  /**newsletterPlugin({
-    access: {
-      isAdmin,
-    },
-    providers: {
-      default: 'resend',
-      resend: {
-        apiKey: process.env.RESEND_API_KEY || '',
-        fromAddress: process.env.WEBSITE_EMAIL || '',
-        fromName: 'Traditional Healer Nalongo Nasamba Newsletter',
-        audienceIds: {
-          en: {
-            production: process.env.RESEND_AUDIENCE_ID || '',
-            development: process.env.RESEND_AUDIENCE_ID || '',
-          },
-        },
-      },
-    },
-  }), **/
   s3Storage({
     collections: {
       storage: {
