@@ -31,7 +31,11 @@ export default async function RootLayout(props: { children: ReactNode }) {
         <Providers>
           <AuthProvider>
             <TooltipProvider>
-              <AdminBar adminBarProps={{ preview: isEnabled }} />
+              <AdminBar
+                adminBarProps={{
+                  preview: isEnabled,
+                }}
+              />
               <Headers /> {/* sticky/fixed header sits here */}
               <main className="flex-1 flex flex-col">{children}</main>
               <Footer />
