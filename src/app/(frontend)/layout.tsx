@@ -27,7 +27,7 @@ export default async function RootLayout(props: { children: ReactNode }) {
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
 
-      <body className="relative flex flex-col min-h-svh">
+      <body className="isolate relative flex flex-col min-h-svh">
         <Providers>
           <AuthProvider>
             <TooltipProvider>
