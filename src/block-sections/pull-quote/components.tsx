@@ -10,7 +10,7 @@ export const PullQuote: React.FC<PullQuoteBlock> = ({
 }) => {
   if (style === 'centered') {
     return (
-      <section className="container my-20">
+      <section className="container md:max-w-7xl my-20">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-2xl md:text-3xl lg:text-4xl font-light leading-snug tracking-tight text-foreground/90 mb-8">
             "{quote}"

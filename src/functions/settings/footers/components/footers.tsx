@@ -14,8 +14,13 @@ export async function Footer() {
   const navItems = footerData?.navItems || []
 
   return (
-    <footer className={cn('mt-auto backdrop-blur bg-card/15 text-card-foreground')}>
-      <section className="container flex flex-col gap-10 md:gap-20 py-20 md:py-32">
+    <footer
+      className={cn(
+        'mt-auto backdrop-blur bg-card/15 text-card-foreground',
+        'border-t border-border/50',
+      )}
+    >
+      <section className="container md:max-w-7xl flex flex-col gap-10 md:gap-20 py-20 md:py-32">
         <div className="grid grid-cols-12">
           <nav className="col-span-12 md:col-span-3 flex flex-col">
             <Image
@@ -25,7 +30,7 @@ export async function Footer() {
               height={16}
               className="size-16 rounded-full"
             />
-            <Link className="text-3xl font-bold " href="/">
+            <Link className="text-lg font-bold " href="/">
               {footerData?.title}
             </Link>
           </nav>
@@ -35,7 +40,7 @@ export async function Footer() {
               const { label, megaLinks } = link
               return (
                 <nav key={i} className="flex flex-col gap-5 col-span-1">
-                  <h2 className="uppercase text-2xl font-semibold">{label}</h2>
+                  <h2 className="uppercase text-base font-semibold">{label}</h2>
                   <div className="flex flex-col gap-2">
                     {megaLinks?.map((link) => (
                       <LinkManager
@@ -54,7 +59,7 @@ export async function Footer() {
             })}
 
             <nav className="flex flex-col gap-5 col-span-1">
-              <h2 className="uppercase text-2xl font-semibold">THEME SETTINGS</h2>
+              <h2 className="uppercase text-base font-semibold">THEME SETTINGS</h2>
               <ThemeSelector />
             </nav>
           </div>
@@ -63,8 +68,8 @@ export async function Footer() {
         <SocialMedia links={footerData?.socialMediaHandles} />
         <div className="flex flex-col gap-5 md:max-w-sm">
           <div className="flex flex-col">
-            <h2 className="uppercase text-2xl font-semibold">Stay connected</h2>
-            <p className="text-muted-foreground">
+            <h2 className="uppercase text-base font-semibold">Stay connected</h2>
+            <p className="text-xs text-muted-foreground md:max-w-3xs">
               Get the latest updates and stay in touch with us
             </p>
           </div>

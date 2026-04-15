@@ -12,7 +12,7 @@ export const ProcessSteps: React.FC<ProcessStepsBlock> = ({
   steps,
 }) => {
   return (
-    <section className="container my-20">
+    <section className="container md:max-w-7xl my-20">
       {(eyebrow || heading || subheading) && (
         <div className="mb-14 max-w-2xl">
           {eyebrow && (

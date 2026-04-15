@@ -56,7 +56,7 @@ export default async function RouteComponent({ params: paramsPromise }: Args) {
       {draft && <LivePreviewListener />}
       <ContentHero post={content} />
       <div className="flex flex-col items-center gap-4 pt-8">
-        <div className="container">
+        <div className="container md:max-w-7xl">
           <RichText className="max-w-3xl mx-auto" data={content.content} enableGutter={false} />
           {content.relatedContent && content.relatedContent.length > 0 && (
             <RelatedContent

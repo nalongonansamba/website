@@ -19,7 +19,7 @@ export const HighImpactHero: FC<Route['hero']> = ({ links, media, richText }) =>
       className="relative -mt-[10.4rem] h-[90vh] flex items-center justify-center text-white"
       data-theme="dark"
     >
-      <div className="container mt-[10.4rem] z-10 relative flex flex-col h-full justify-center">
+      <div className="container md:max-w-7xl mt-[10.4rem] z-10 relative flex flex-col h-full justify-center">
         <div className="max-w-146 md:text-start">
           {richText && <RichText className="mb-6" data={richText} enableGutter={false} />}
           {Array.isArray(links) && links.length > 0 && (

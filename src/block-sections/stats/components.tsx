@@ -40,7 +40,7 @@ export const Stats: React.FC<StatsBlock> = ({
   )
 
   return (
-    <section className="container my-20">
+    <section className="container md:max-w-7xl my-20">
       {layout === 'split' ? (
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>

@@ -60,7 +60,7 @@ export const MegaMenu: FC<{
       onMouseEnter={cancelClose} // ✅ cursor arrived — cancel the pending close
       onMouseLeave={scheduleClose} // ✅ cursor left dropdown — schedule close
     >
-      <div className="container mx-auto flex gap-5 py-10">
+      <div className="container md:max-w-7xl mx-auto flex gap-5 py-10">
         {image && typeof image === 'object' && (
           <div className="w-53 h-72 rounded-2xl overflow-hidden border border-dashed shadow">
             <MediaPreview

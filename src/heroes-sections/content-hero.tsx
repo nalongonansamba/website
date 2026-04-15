@@ -29,7 +29,7 @@ export const ContentHero: React.FC<{ post: Content }> = ({ post }) => {
       <div className="absolute inset-0 -z-5 bg-linear-to-r from-black/50 to-transparent" />
 
       {/* Content — anchored to bottom */}
-      <div className="container relative z-10 pb-12 md:pb-16 pt-32 max-w-5xl">
+      <div className="container md:max-w-7xl relative z-10 pb-12 md:pb-16 pt-32 max-w-5xl">
         {/* Categories */}
         {categories && categories.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-5">

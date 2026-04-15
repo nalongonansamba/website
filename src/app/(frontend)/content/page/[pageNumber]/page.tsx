@@ -35,7 +35,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   return (
     <div className="pt-24 pb-24">
       <PageClient />
-      <div className="container mb-16">
+      <div className="container md:max-w-7xl mb-16">
         <div className="flex flex-col gap-0 max-w-none">
           <h1 className="text-3xl font-bold">Indigenous Healing & Botanical Wisdom</h1>
           <p className="text-muted-foreground md:max-w-md">
@@ -46,7 +46,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       </div>
 
       <CollectionArchive content={content.docs} />
-      <div className="container mb-3">
+      <div className="container md:max-w-7xl mb-3">
         <PageRange
           collection="content"
           currentPage={content.page}
@@ -54,7 +54,7 @@ export default async function Page({ params: paramsPromise }: Args) {
           totalDocs={content.totalDocs}
         />
       </div>
-      <div className="container">
+      <div className="container md:max-w-7xl">
         {content?.page && content?.totalPages > 1 && (
           <Pagination page={content.page} totalPages={content.totalPages} />
         )}

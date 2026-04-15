@@ -4,10 +4,8 @@ import { useAuth } from '@/components/auth-provider'
 import { cn } from '@/components/lib/utils'
 import { LinkManager } from '@/components/link-manager'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { Select, SelectContent, SelectTrigger } from '@/components/ui/select'
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -33,6 +31,10 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
   const pathname = usePathname()
   const { user } = useAuth()
 
+  const currentPath = (path: string) => {
+    return pathname === path
+  }
+
   useEffect(() => {
     setHeaderTheme(null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,23 +48,24 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
   return (
     <header
       className={cn(
-        'sticky isolate inset-x-0 z-55 flex items-center transition-colors duration-300',
+        'sticky inset-x-0 z-55 flex items-center transition-colors duration-300',
+        'bg-background backdrop-blur-sm',
         {
           ...(theme ? { 'data-theme': theme } : {}),
         },
         user ? 'top-11' : 'top-0',
       )}
     >
-      <div className="container flex items-center justify-between py-5">
-        <div className="flex items-center gap-1 mix-blend-difference text-white dark:text-current">
+      <div className="container md:max-w-7xl flex items-center justify-between py-3">
+        <div className="flex items-center gap-1">
           <Image
             src="/favicon.svg"
             alt="Footer Logo"
             width={10}
             height={10}
-            className="size-10 rounded-full"
+            className="size-8 rounded-full"
           />
-          <Link href="/" className="text-2xl font-extrabold cursor-pointer">
+          <Link href="/" className="text-lg font-extrabold cursor-pointer">
             {props?.title}
           </Link>
         </div>
@@ -73,7 +76,11 @@ export const HeadersClient: FC<HeadersClientProps> = (props) => {
                 <LinkManager
                   key={i}
                   {...link}
-                  className={cn('p-0 text-base', 'hover:decoration-wavy cursor-pointer')}
+                  headers
+                  className={cn(
+                    'p-0 text-base text-current/55 hover:text-current',
+                    'hover:decoration-wavy cursor-pointer',
+                  )}
                   appearance="link"
                 />
               )

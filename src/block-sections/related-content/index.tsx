@@ -14,7 +14,7 @@ export type RelatedContentProps = {
 export const RelatedContent: FC<RelatedContentProps> = (props) => {
   const { className, docs, introContent } = props
   return (
-    <div className={clsx('lg:container', className)}>
+    <div className={clsx('lg:container lg:max-w-7xl', className)}>
       {introContent && <RichText data={introContent} enableGutter={false} />}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 items-stretch">
         {docs?.map((doc, index) => {

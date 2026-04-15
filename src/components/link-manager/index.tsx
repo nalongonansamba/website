@@ -1,3 +1,5 @@
+'use client'
+
 import { VariantProps } from 'class-variance-authority'
 import { Button, buttonVariants } from '../ui/button'
 import { Content, Route, Storage } from '@/payload-types'
@@ -5,6 +7,7 @@ import { FC } from 'react'
 import { cn } from '../lib/utils'
 import Link from 'next/link'
 import { MegaMenu } from '../mega-menu'
+import { usePathname } from 'next/navigation'
 
 type buttonVar = VariantProps<typeof buttonVariants>
 
@@ -39,6 +42,8 @@ export type defaultLinksProps = {
   id?: string | null
   megaLinks?: MegaLinkItem[] | null
   onClick?: () => void
+} & {
+  headers?: boolean
 }
 
 export const LinkManager: FC<defaultLinksProps> = (props) => {
@@ -55,6 +60,7 @@ export const LinkManager: FC<defaultLinksProps> = (props) => {
     reference,
     size: sizeFromProps,
     url,
+    headers = false,
     onClick,
   } = props
 
@@ -66,6 +72,11 @@ export const LinkManager: FC<defaultLinksProps> = (props) => {
   const size = appearance === 'link' ? 'clear' : sizeFromProps
   const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
+  const pathname = usePathname()
+  const currentPath = (path: string) => {
+    return pathname === path
+  }
+
   // ✅ type === 'mega' with actual links → render MegaMenu
   if (type === 'mega' && megaLinks && megaLinks.length > 0) {
     return <MegaMenu key={id} label={label} image={image} links={megaLinks} />
@@ -74,7 +85,11 @@ export const LinkManager: FC<defaultLinksProps> = (props) => {
   if (appearance === 'inline') {
     return (
       <Link
-        className={cn(className, 'flex flex-col')}
+        className={cn(
+          className,
+          'flex flex-col',
+          headers === true && currentPath(href || '') ? 'text-current' : 'text-current/55',
+        )}
         // @ts-ignore
         href={href!! || url!! || '#'}
         {...newTabProps}
@@ -89,7 +104,11 @@ export const LinkManager: FC<defaultLinksProps> = (props) => {
     <Button
       variant={appearance as buttonVar['variant']}
       size={(size as any) ?? 'default'}
-      className={cn('cursor-pointer', className)}
+      className={cn(
+        'cursor-pointer',
+        className,
+        headers === true && currentPath(href || '') ? 'text-current' : 'text-current/55',
+      )}
       nativeButton={false}
       // @ts-ignore
       onClick={onClick}

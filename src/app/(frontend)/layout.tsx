@@ -14,6 +14,7 @@ import { Footer } from '@/functions/settings/footers/components/footers'
 import { getServerSideURL } from '@/functions/config/getURL'
 import { mergeOpenGraph } from '@/functions/config/mergeOpenGraph'
 import { AuthProvider } from '@/components/auth-provider'
+import { cn } from '@/components/lib/utils'
 
 export default async function RootLayout(props: { children: ReactNode }) {
   const { isEnabled } = await draftMode()
@@ -27,7 +28,12 @@ export default async function RootLayout(props: { children: ReactNode }) {
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
 
-      <body className="isolate relative flex flex-col min-h-svh">
+      <body
+        className={cn(
+          'isolate relative flex flex-col min-h-svh',
+          'selection:bg-primary/20 selection:text-primary',
+        )}
+      >
         <Providers>
           <AuthProvider>
             <TooltipProvider>
@@ -36,11 +42,9 @@ export default async function RootLayout(props: { children: ReactNode }) {
                   preview: isEnabled,
                 }}
               />
-              <Headers /> {/* sticky/fixed header sits here */}
+              <Headers />
               <main className="flex-1 flex flex-col">{children}</main>
               <Footer />
-              <BackgroundCover />
-              <BackgroundCover placement="bottom" />
               <Toaster richColors />
             </TooltipProvider>
           </AuthProvider>

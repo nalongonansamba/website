@@ -10,7 +10,7 @@ export const CollectionArchive: FC<Props> = (props) => {
   const { content } = props
 
   return (
-    <div className={cn('container')}>
+    <div className={cn('container md:max-w-7xl')}>
       <div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
           {content?.map((result, index) => {

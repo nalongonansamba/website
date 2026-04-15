@@ -113,7 +113,7 @@ export const FormBlock: React.FC<
   )
 
   return (
-    <div className="container flex flex-col md:flex-row md:justify-between md:items-start gap-8 md:gap-12 py-10">
+    <div className="container md:max-w-7xl flex flex-col md:flex-row md:justify-between md:items-start gap-8 md:gap-12 py-10">
       {enableIntro && introContent && !hasSubmitted && (
         <div className="md:w-2/7 md:sticky shrink-0">
           <RichText data={introContent} enableGutter={false} />

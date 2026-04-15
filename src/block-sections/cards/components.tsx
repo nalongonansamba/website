@@ -49,7 +49,7 @@ export const Cards: React.FC<CardsBlock> = (props) => {
   const isRow = layout === 'row'
 
   return (
-    <section className="container my-20">
+    <section className="container md:max-w-7xl my-20">
       {/* Section header */}
       {(eyebrow || heading || subheading) && (
         <div className="mb-12 max-w-2xl">

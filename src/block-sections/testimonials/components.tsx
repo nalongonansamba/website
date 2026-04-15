@@ -54,7 +54,7 @@ export const Testimonials: React.FC<TestimonialsBlock> = ({
   const rest = testimonials?.filter((t) => !t.featured)
 
   return (
-    <section className="container my-20">
+    <section className="container md:max-w-7xl my-20">
       {(eyebrow || heading) && (
         <div className="mb-12 max-w-2xl">
           {eyebrow && (

@@ -60,7 +60,7 @@ export const HerbSpotlight: React.FC<HerbSpotlightBlock> = ({
   }
 
   return (
-    <section className="container my-20">
+    <section className="container md:max-w-7xl my-20">
       <div
         className={cn(
           'grid md:grid-cols-2 gap-10 md:gap-16 items-center',

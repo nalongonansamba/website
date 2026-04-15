@@ -102,7 +102,7 @@ export const Accordion: React.FC<AccoundionBlockProps> = ({
   )
 
   return (
-    <section className="container my-20">
+    <section className="container md:max-w-7xl my-20">
       {layout === 'split' ? (
         <div className="grid md:grid-cols-[1fr_1.6fr] gap-12 md:gap-20 items-start">
           <div className="md:sticky md:top-24">
